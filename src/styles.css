@@ -62,26 +62,33 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --radius: 0.125rem;
+  /* charcoal + old brick + firelight */
+  --background: oklch(0.176 0.011 55);
+  --foreground: oklch(0.907 0.021 75);
+  --card: oklch(0.222 0.014 58);
+  --card-foreground: oklch(0.907 0.021 75);
+  --popover: oklch(0.222 0.014 58);
+  --popover-foreground: oklch(0.907 0.021 75);
+  --primary: oklch(0.653 0.145 47);
+  --primary-foreground: oklch(0.16 0.012 55);
+  --secondary: oklch(0.222 0.014 58);
+  --secondary-foreground: oklch(0.907 0.021 75);
+  --muted: oklch(0.245 0.015 58);
+  --muted-foreground: oklch(0.685 0.018 70);
+  --accent: oklch(0.478 0.104 38);
+  --accent-foreground: oklch(0.93 0.02 75);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.297 0.018 55);
+  --input: oklch(0.297 0.018 55);
+  --ring: oklch(0.653 0.145 47);
+  --brick: oklch(0.351 0.075 38);
+  --terracotta: oklch(0.478 0.104 38);
+  --amber: oklch(0.653 0.145 47);
+  --firelight: oklch(0.784 0.121 62);
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +147,91 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  ::selection {
+    background: var(--terracotta);
+    color: var(--foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+}
+
+@theme inline {
+  --color-brick: var(--brick);
+  --color-terracotta: var(--terracotta);
+  --color-amber: var(--amber);
+  --color-firelight: var(--firelight);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* Живой огонь: мягкое мерцание света очага */
+@keyframes emberflicker {
+  0% { opacity: 0.5; transform: scale(1); }
+  22% { opacity: 0.72; transform: scale(1.03); }
+  41% { opacity: 0.44; transform: scale(0.99); }
+  63% { opacity: 0.8; transform: scale(1.05); }
+  81% { opacity: 0.55; transform: scale(1.01); }
+  100% { opacity: 0.5; transform: scale(1); }
+}
+
+@keyframes emberdrift {
+  0% { opacity: 0.34; transform: translate3d(0,0,0) scale(1.02); }
+  50% { opacity: 0.6; transform: translate3d(0,-1.5%,0) scale(1.06); }
+  100% { opacity: 0.34; transform: translate3d(0,0,0) scale(1.02); }
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.fire-flicker {
+  animation: emberflicker 7.5s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.fire-drift {
+  animation: emberdrift 11s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.rise-in {
+  animation: riseIn 0.9s cubic-bezier(0.16, 0.84, 0.44, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fire-flicker,
+  .fire-drift,
+  .rise-in {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
   }
 }
