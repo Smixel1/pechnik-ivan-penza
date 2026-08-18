@@ -1,6 +1,6 @@
 @import "tailwindcss" source(none);
 @source "../src";
-@import "tw-animate-css";
+@source not "../src/components/ui";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -63,19 +63,20 @@
 
 :root {
   --radius: 0.125rem;
+  --content-max: 82rem;
   /* charcoal + old brick + firelight */
   --background: oklch(0.176 0.011 55);
-  --foreground: oklch(0.907 0.021 75);
+  --foreground: oklch(0.905 0.012 86);
   --card: oklch(0.222 0.014 58);
-  --card-foreground: oklch(0.907 0.021 75);
+  --card-foreground: oklch(0.905 0.012 86);
   --popover: oklch(0.222 0.014 58);
-  --popover-foreground: oklch(0.907 0.021 75);
+  --popover-foreground: oklch(0.905 0.012 86);
   --primary: oklch(0.653 0.145 47);
   --primary-foreground: oklch(0.16 0.012 55);
   --secondary: oklch(0.222 0.014 58);
-  --secondary-foreground: oklch(0.907 0.021 75);
+  --secondary-foreground: oklch(0.905 0.012 86);
   --muted: oklch(0.245 0.015 58);
-  --muted-foreground: oklch(0.685 0.018 70);
+  --muted-foreground: oklch(0.795 0.012 76);
   --accent: oklch(0.478 0.104 38);
   --accent-foreground: oklch(0.93 0.02 75);
   --destructive: oklch(0.577 0.245 27.325);
@@ -148,12 +149,25 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.65;
+    letter-spacing: normal;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   html {
+    color-scheme: dark;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+    overflow-x: hidden;
+  }
+
+  p {
+    line-height: 1.7;
+    letter-spacing: normal;
   }
 
   ::selection {
@@ -165,6 +179,14 @@
     outline: 2px solid var(--amber);
     outline-offset: 3px;
   }
+
+  summary {
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
 }
 
 @theme inline {
@@ -174,51 +196,199 @@
   --color-firelight: var(--firelight);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+  --max-width-content: var(--content-max);
+}
+
+@utility max-w-content {
+  max-width: var(--content-max);
+}
+
+@utility read-width {
+  max-width: 65ch;
+}
+
+@utility read-width-wide {
+  max-width: 70ch;
 }
 
 @utility display {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
 }
 
 @utility eyebrow {
   font-size: 0.6875rem;
-  letter-spacing: 0.22em;
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted-foreground);
 }
 
+@layer components {
+  .prose-copy {
+    font-size: 1rem;
+    line-height: 1.72;
+    font-weight: 500;
+    letter-spacing: normal;
+  }
+
+  @media (min-width: 640px) {
+    .prose-copy {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+    }
+  }
+
+  .prose-copy-sm {
+    font-size: 1rem;
+    line-height: 1.65;
+    font-weight: 500;
+    letter-spacing: normal;
+  }
+
+  .nav-link {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .cta-primary,
+  .cta-primary-outline,
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.6875rem 1.75rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: var(--radius);
+    transition:
+      background-color 250ms ease,
+      border-color 250ms ease,
+      color 250ms ease,
+      transform 250ms ease,
+      filter 250ms ease;
+  }
+
+  .cta-primary {
+    font-weight: 600;
+    color: var(--primary-foreground);
+    background-color: oklch(0.738 0.105 58);
+    border: 1px solid oklch(0.738 0.105 58 / 0.92);
+  }
+
+  @media (hover: hover) {
+    .cta-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+      background-color: oklch(0.768 0.115 60);
+      border-color: oklch(0.784 0.121 62 / 0.95);
+    }
+
+    .cta-primary-outline:hover {
+      background-color: oklch(0.738 0.105 58 / 0.1);
+      border-color: oklch(0.784 0.121 62 / 0.65);
+      color: var(--foreground);
+    }
+
+    .cta-secondary:hover {
+      border-color: oklch(0.653 0.145 47 / 0.45);
+      color: var(--foreground);
+    }
+  }
+
+  .cta-primary-outline {
+    font-weight: 500;
+    color: var(--foreground);
+    background-color: transparent;
+    border: 1px solid oklch(0.738 0.105 58 / 0.45);
+  }
+
+  .cta-secondary {
+    font-weight: 500;
+    color: var(--muted-foreground);
+    background-color: transparent;
+    border: 1px solid var(--border);
+  }
+
+  .cta-primary:focus-visible,
+  .cta-primary-outline:focus-visible,
+  .cta-secondary:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+}
+
 /* Живой огонь: мягкое мерцание света очага */
 @keyframes emberflicker {
-  0% { opacity: 0.5; transform: scale(1); }
-  22% { opacity: 0.72; transform: scale(1.03); }
-  41% { opacity: 0.44; transform: scale(0.99); }
-  63% { opacity: 0.8; transform: scale(1.05); }
-  81% { opacity: 0.55; transform: scale(1.01); }
-  100% { opacity: 0.5; transform: scale(1); }
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  22% {
+    opacity: 0.72;
+    transform: scale(1.03);
+  }
+  41% {
+    opacity: 0.44;
+    transform: scale(0.99);
+  }
+  63% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  81% {
+    opacity: 0.55;
+    transform: scale(1.01);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
 }
 
 @keyframes emberdrift {
-  0% { opacity: 0.34; transform: translate3d(0,0,0) scale(1.02); }
-  50% { opacity: 0.6; transform: translate3d(0,-1.5%,0) scale(1.06); }
-  100% { opacity: 0.34; transform: translate3d(0,0,0) scale(1.02); }
+  0% {
+    opacity: 0.34;
+    transform: translate3d(0, 0, 0) scale(1.02);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate3d(0, -1.5%, 0) scale(1.06);
+  }
+  100% {
+    opacity: 0.34;
+    transform: translate3d(0, 0, 0) scale(1.02);
+  }
 }
 
 @keyframes riseIn {
-  from { opacity: 0; transform: translate3d(0, 18px, 0); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .fire-flicker {
+  opacity: 0.55;
   animation: emberflicker 7.5s ease-in-out infinite;
-  will-change: opacity, transform;
 }
 
 .fire-drift {
+  opacity: 0.45;
   animation: emberdrift 11s ease-in-out infinite;
-  will-change: opacity, transform;
 }
 
 .rise-in {
@@ -226,12 +396,184 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .fire-flicker,
-  .fire-drift,
+  html {
+    scroll-behavior: auto;
+  }
   .rise-in {
     animation: none !important;
     opacity: 1;
     transform: none;
+  }
+  .fire-flicker,
+  .fire-drift {
+    animation: none !important;
+    transform: none;
+  }
+  .hero-zoom-img {
+    animation: none !important;
+    transform: scale(1.04) !important;
+  }
+}
+
+/* Hero: плавный заметный zoom */
+@keyframes heroKenBurns {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1.14);
+  }
+}
+
+.hero-zoom {
+  overflow: hidden;
+}
+
+.hero-zoom-img {
+  transform: scale(1.04);
+  transform-origin: center center;
+  animation: heroKenBurns 48s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@media (max-width: 639px) {
+  .hero-zoom-img {
+    transform: scale(1.02);
+    animation-duration: 60s;
+    animation-name: heroKenBurnsMobile;
+  }
+
+  @keyframes heroKenBurnsMobile {
+    from {
+      transform: scale(1.02);
+    }
+    to {
+      transform: scale(1.08);
+    }
+  }
+}
+
+/* Лёгкий scrim под текстом Hero */
+.hero-text-scrim {
+  background: linear-gradient(
+    to top,
+    oklch(0.176 0.011 55 / 0.92) 0%,
+    oklch(0.176 0.011 55 / 0.55) 42%,
+    oklch(0.176 0.011 55 / 0.15) 72%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.info-card {
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.info-card:hover {
+  border-color: oklch(0.653 0.145 47 / 0.35);
+  background: oklch(0.245 0.015 58 / 0.45);
+}
+
+.highlight-card {
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.highlight-card:hover {
+  border-color: oklch(0.653 0.145 47 / 0.4);
+  transform: translateY(-1px);
+}
+
+.estimate-calculator label:focus-within {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.gallery-thumb {
+  cursor: zoom-in;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.gallery-thumb img {
+  transition:
+    transform 0.55s ease,
+    opacity 0.55s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-thumb:hover img {
+    transform: scale(1.04);
+  }
+
+  .gallery-thumb:hover .gallery-view-hint {
+    opacity: 1;
+  }
+}
+
+.gallery-view-hint {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+/* Editorial desktop grid: тонкие линии + декоративные номера секций */
+.editorial-section {
+  position: relative;
+}
+
+.editorial-inner {
+  position: relative;
+  width: 100%;
+}
+
+.editorial-marker {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .editorial-marker {
+    display: block;
+    position: absolute;
+    top: 2.5rem;
+    left: max(1rem, calc((100% - var(--content-max)) / 2 - 7.5rem));
+    z-index: 0;
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 9vw, 10rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--foreground);
+    opacity: 0.06;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .editorial-marker-subtle {
+    opacity: 0.04;
+  }
+
+  .editorial-inner::before,
+  .editorial-inner::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: oklch(0.297 0.018 55 / 0.14);
+    pointer-events: none;
+  }
+
+  .editorial-inner::before {
+    left: 0;
+  }
+
+  .editorial-inner::after {
+    right: 0;
   }
 }
