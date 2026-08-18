@@ -244,7 +244,7 @@ function Index() {
               width={1376}
               height={800}
               fetchPriority="high"
-              className="h-full w-full object-cover opacity-70"
+              className="h-full w-full object-cover opacity-90"
             />
             <div
               aria-hidden
@@ -259,7 +259,7 @@ function Index() {
               className="fire-flicker absolute left-1/2 bottom-[18%] h-64 w-64 -translate-x-1/2 rounded-full blur-3xl"
               style={{ background: "oklch(0.653 0.145 47 / 0.55)" }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/35 to-background" />
           </div>
 
           <div className="mx-auto flex min-h-[86svh] max-w-6xl flex-col justify-end px-5 pb-20 pt-28 sm:px-8 sm:pb-28">
