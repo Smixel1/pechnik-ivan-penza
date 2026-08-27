@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import { estimateRequestMessage, telegramShareUrl } from "@/lib/telegram";
+import { estimateRequestMessage, sanitizeTelegramField, telegramFieldLimit, telegramShareUrl } from "@/lib/telegram";
 
 const TYPES = [
   "Печь",
@@ -158,8 +158,9 @@ export function EstimateCalculator() {
                   type="text"
                   inputMode="text"
                   placeholder="например, 120 м²"
+                  maxLength={telegramFieldLimit("area")}
                   value={area}
-                  onChange={(e) => setArea(e.target.value)}
+                  onChange={(e) => setArea(sanitizeTelegramField(e.target.value, telegramFieldLimit("area")))}
                   className="min-h-11 w-full border border-border/70 bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber/70 focus:outline-none"
                 />
               </label>
@@ -170,8 +171,11 @@ export function EstimateCalculator() {
                 <input
                   type="text"
                   placeholder="например, 120×80 см"
+                  maxLength={telegramFieldLimit("dimensions")}
                   value={dimensions}
-                  onChange={(e) => setDimensions(e.target.value)}
+                  onChange={(e) =>
+                    setDimensions(sanitizeTelegramField(e.target.value, telegramFieldLimit("dimensions")))
+                  }
                   className="min-h-11 w-full border border-border/70 bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber/70 focus:outline-none"
                 />
               </label>
@@ -182,8 +186,11 @@ export function EstimateCalculator() {
                 <input
                   type="text"
                   placeholder="если уже есть предпочтения"
+                  maxLength={telegramFieldLimit("material")}
                   value={material}
-                  onChange={(e) => setMaterial(e.target.value)}
+                  onChange={(e) =>
+                    setMaterial(sanitizeTelegramField(e.target.value, telegramFieldLimit("material")))
+                  }
                   className="min-h-11 w-full border border-border/70 bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber/70 focus:outline-none"
                 />
               </label>
@@ -194,8 +201,9 @@ export function EstimateCalculator() {
                 <textarea
                   rows={3}
                   placeholder="мангал, казан, дровник, отделка..."
+                  maxLength={telegramFieldLimit("notes")}
                   value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
+                  onChange={(e) => setNotes(sanitizeTelegramField(e.target.value, telegramFieldLimit("notes")))}
                   className="w-full resize-y border border-border/70 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber/70 focus:outline-none"
                 />
               </label>

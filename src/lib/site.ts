@@ -14,6 +14,17 @@ export function absoluteUrl(path = "/"): string {
 
 export const TG_URL = "https://t.me/Cvd123455";
 export const TG_HANDLE = "@Cvd123455";
+
+if (import.meta.env.DEV) {
+  try {
+    const parsed = new URL(TG_URL);
+    if (parsed.protocol !== "https:" || parsed.hostname !== "t.me") {
+      console.warn("[site] TG_URL should be an https://t.me/ link.");
+    }
+  } catch {
+    console.warn("[site] TG_URL is not a valid URL.");
+  }
+}
 export const SITE_NAME = "Печник Иван | Пенза";
 export const PAGE_TITLE = "Печник Иван — кирпичные печи, камины и барбекю в Пензе";
 export const PAGE_DESCRIPTION =

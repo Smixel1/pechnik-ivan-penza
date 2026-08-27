@@ -1,7 +1,30 @@
 import { TG_URL } from "@/lib/site";
 
+/** Telegram share URLs cap text below the platform limit (4096). */
+const TELEGRAM_TEXT_LIMIT = 3800;
+
+const TELEGRAM_FIELD_LIMITS = {
+  area: 80,
+  dimensions: 80,
+  material: 120,
+  notes: 500,
+} as const;
+
+/** Strip control characters and cap length for user-supplied Telegram message fields. */
+export function sanitizeTelegramField(value: string, maxLength: number): string {
+  return value
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .trim()
+    .slice(0, maxLength);
+}
+
+export function telegramFieldLimit(field: keyof typeof TELEGRAM_FIELD_LIMITS): number {
+  return TELEGRAM_FIELD_LIMITS[field];
+}
+
 export function telegramShareUrl(message: string): string {
-  return `${TG_URL}?text=${encodeURIComponent(message)}`;
+  const safeMessage = message.slice(0, TELEGRAM_TEXT_LIMIT);
+  return `${TG_URL}?text=${encodeURIComponent(safeMessage)}`;
 }
 
 export function consultationMessage(): string {
@@ -28,6 +51,15 @@ export function estimateRequestMessage(data: {
   material?: string;
   notes?: string;
 }): string {
+  const area = data.area ? sanitizeTelegramField(data.area, TELEGRAM_FIELD_LIMITS.area) : "";
+  const dimensions = data.dimensions
+    ? sanitizeTelegramField(data.dimensions, TELEGRAM_FIELD_LIMITS.dimensions)
+    : "";
+  const material = data.material
+    ? sanitizeTelegramField(data.material, TELEGRAM_FIELD_LIMITS.material)
+    : "";
+  const notes = data.notes ? sanitizeTelegramField(data.notes, TELEGRAM_FIELD_LIMITS.notes) : "";
+
   const lines = [
     "Здравствуйте! Хочу получить предварительную оценку проекта.",
     "",
@@ -35,10 +67,10 @@ export function estimateRequestMessage(data: {
     `Объект: ${data.place}`,
   ];
 
-  if (data.area?.trim()) lines.push(`Площадь: ${data.area.trim()}`);
-  if (data.dimensions?.trim()) lines.push(`Размеры: ${data.dimensions.trim()}`);
-  if (data.material?.trim()) lines.push(`Материал: ${data.material.trim()}`);
-  if (data.notes?.trim()) lines.push(`Дополнительно: ${data.notes.trim()}`);
+  if (area) lines.push(`Площадь: ${area}`);
+  if (dimensions) lines.push(`Размеры: ${dimensions}`);
+  if (material) lines.push(`Материал: ${material}`);
+  if (notes) lines.push(`Дополнительно: ${notes}`);
 
   lines.push("", "Готов(а) обсудить детали.");
 
