@@ -1,7 +1,12 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { loadEnv } from "vite";
 
-const origin = (process.env.VITE_SITE_URL ?? "").replace(/\/$/, "");
+const origin = (
+  process.env.VITE_SITE_URL ??
+  loadEnv("production", process.cwd(), "VITE_").VITE_SITE_URL ??
+  ""
+).replace(/\/$/, "");
 
 function buildSitemapXml(base) {
   const loc = base ? `${base}/` : "/";
@@ -27,7 +32,7 @@ ${sitemapLine}
 `;
 }
 
-const outputs = [".output/public", "dist", "public"];
+const outputs = [".output/public", ".vercel/output/static", "dist", "public"];
 const sitemap = buildSitemapXml(origin);
 const robots = buildRobotsTxt(origin);
 

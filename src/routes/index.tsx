@@ -6,7 +6,12 @@ import { EstimateCalculator } from "@/components/estimate-calculator";
 import { PortfolioGallery } from "@/components/portfolio-gallery";
 import { SITE_NAME, TG_HANDLE, TG_URL } from "@/lib/site";
 import { buildHomeJsonLd, buildPageHead } from "@/lib/seo";
-import { consultationMessage, projectDiscussionMessage, telegramShareUrl } from "@/lib/telegram";
+import {
+  consultationMessage,
+  costQuestionMessage,
+  projectDiscussionMessage,
+  telegramShareUrl,
+} from "@/lib/telegram";
 
 const IMG = {
   fireHero: "/images/kirpichnaya-pech-zhivoy-ogon.png",
@@ -646,8 +651,8 @@ function Index() {
             ))}
           </div>
           <div className="mt-12 flex flex-wrap items-center gap-6">
-            <TelegramLink href={telegramShareUrl(consultationMessage())}>
-              Получить предварительный расчёт
+            <TelegramLink href={telegramShareUrl(costQuestionMessage())}>
+              Спросить о стоимости в Telegram
             </TelegramLink>
             <a href="#estimate" className="cta-secondary">
               Заполнить данные для оценки →

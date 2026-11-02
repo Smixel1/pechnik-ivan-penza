@@ -23,7 +23,8 @@ npx wrangler dev
 
 ## Production URL
 
-После публикации задайте origin без слэша в конце:
+Для production-сборки задан опубликованный адрес в `.env.production`.
+Если основной домен изменится, обновите файл или задайте `VITE_SITE_URL` в настройках сборки:
 
 ```env
 VITE_SITE_URL=https://your-domain.ru

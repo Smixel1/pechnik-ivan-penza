@@ -35,6 +35,14 @@ export function consultationMessage(): string {
   ].join("\n");
 }
 
+export function costQuestionMessage(): string {
+  return [
+    "Здравствуйте! Хочу узнать предварительную стоимость печи.",
+    "",
+    "Расскажу о проекте и размерах после вашего ответа.",
+  ].join("\n");
+}
+
 export function projectDiscussionMessage(): string {
   return [
     "Здравствуйте! Хочу обсудить свой проект.",
