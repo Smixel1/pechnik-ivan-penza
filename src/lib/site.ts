@@ -1,8 +1,7 @@
-/** Production origin without trailing slash. Empty until VITE_SITE_URL is set. */
+/** Production origin without trailing slash. */
 export function siteOrigin(): string {
   const env = import.meta.env as Record<string, string | undefined>;
-  const raw = env["VITE_SITE_URL"];
-  if (!raw) return "";
+  const raw = env["VITE_SITE_URL"]?.trim() || "https://pechnik-ivan-penza.vercel.app";
   return raw.replace(/\/$/, "");
 }
 
