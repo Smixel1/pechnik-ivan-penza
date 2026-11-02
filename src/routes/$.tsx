@@ -7,7 +7,8 @@ export const Route = createFileRoute("/$")({
   head: () => {
     const { meta, links } = buildPageHead({
       title: "Страница не найдена — Печник Иван",
-      description: "Запрошенная страница не найдена. Вернитесь на главную, чтобы посмотреть работы печника Ивана в Пензе.",
+      description:
+        "Запрошенная страница не найдена. Вернитесь на главную, чтобы посмотреть работы печника Ивана в Пензе.",
       robots: "noindex, follow",
       preloadHero: false,
     });

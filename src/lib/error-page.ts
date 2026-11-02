@@ -19,7 +19,7 @@ export function renderErrorPage(): string {
       <h1>Страница не загрузилась</h1>
       <p>Что-то пошло не так. Можно обновить страницу или вернуться на главную.</p>
       <div class="actions">
-        <button type="button" onclick="location.reload()">Попробовать снова</button>
+        <a href="">Попробовать снова</a>
         <a href="/">На главную</a>
       </div>
     </div>

@@ -1,14 +1,13 @@
 import { useMemo, useState } from "react";
 
-import { estimateRequestMessage, sanitizeTelegramField, telegramFieldLimit, telegramShareUrl } from "@/lib/telegram";
+import {
+  estimateRequestMessage,
+  sanitizeTelegramField,
+  telegramFieldLimit,
+  telegramShareUrl,
+} from "@/lib/telegram";
 
-const TYPES = [
-  "Печь",
-  "Камин",
-  "Мангал / уличный комплекс",
-  "Печное отопление",
-  "Другое",
-] as const;
+const TYPES = ["Печь", "Камин", "Мангал / уличный комплекс", "Печное отопление", "Другое"] as const;
 
 const PLACES = ["Частный дом", "Баня", "Беседка", "Уличная зона", "Другое"] as const;
 
@@ -24,8 +23,7 @@ export function EstimateCalculator() {
   const [material, setMaterial] = useState("");
   const [notes, setNotes] = useState("");
 
-  const canNext =
-    (step === 1 && type !== "") || (step === 2 && place !== "") || step === 3;
+  const canNext = (step === 1 && type !== "") || (step === 2 && place !== "") || step === 3;
 
   const telegramUrl = useMemo(() => {
     if (!type || !place) return "";
@@ -143,9 +141,7 @@ export function EstimateCalculator() {
 
         {step === 3 && (
           <div>
-            <h3 className="display text-xl text-foreground sm:text-2xl">
-              Что уже известно?
-            </h3>
+            <h3 className="display text-xl text-foreground sm:text-2xl">Что уже известно?</h3>
             <p className="mt-2 prose-copy-sm text-muted-foreground">
               Все поля необязательны — заполните то, что уже есть.
             </p>
@@ -160,7 +156,9 @@ export function EstimateCalculator() {
                   placeholder="например, 120 м²"
                   maxLength={telegramFieldLimit("area")}
                   value={area}
-                  onChange={(e) => setArea(sanitizeTelegramField(e.target.value, telegramFieldLimit("area")))}
+                  onChange={(e) =>
+                    setArea(sanitizeTelegramField(e.target.value, telegramFieldLimit("area")))
+                  }
                   className="min-h-11 w-full border border-border/70 bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber/70 focus:outline-none"
                 />
               </label>
@@ -174,7 +172,9 @@ export function EstimateCalculator() {
                   maxLength={telegramFieldLimit("dimensions")}
                   value={dimensions}
                   onChange={(e) =>
-                    setDimensions(sanitizeTelegramField(e.target.value, telegramFieldLimit("dimensions")))
+                    setDimensions(
+                      sanitizeTelegramField(e.target.value, telegramFieldLimit("dimensions")),
+                    )
                   }
                   className="min-h-11 w-full border border-border/70 bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber/70 focus:outline-none"
                 />
@@ -189,7 +189,9 @@ export function EstimateCalculator() {
                   maxLength={telegramFieldLimit("material")}
                   value={material}
                   onChange={(e) =>
-                    setMaterial(sanitizeTelegramField(e.target.value, telegramFieldLimit("material")))
+                    setMaterial(
+                      sanitizeTelegramField(e.target.value, telegramFieldLimit("material")),
+                    )
                   }
                   className="min-h-11 w-full border border-border/70 bg-background px-4 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber/70 focus:outline-none"
                 />
@@ -203,7 +205,9 @@ export function EstimateCalculator() {
                   placeholder="мангал, казан, дровник, отделка..."
                   maxLength={telegramFieldLimit("notes")}
                   value={notes}
-                  onChange={(e) => setNotes(sanitizeTelegramField(e.target.value, telegramFieldLimit("notes")))}
+                  onChange={(e) =>
+                    setNotes(sanitizeTelegramField(e.target.value, telegramFieldLimit("notes")))
+                  }
                   className="w-full resize-y border border-border/70 bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-amber/70 focus:outline-none"
                 />
               </label>
@@ -252,12 +256,7 @@ export function EstimateCalculator() {
               Далее
             </button>
           ) : (
-            <a
-              href={telegramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-primary"
-            >
+            <a href={telegramUrl} target="_blank" rel="noopener noreferrer" className="cta-primary">
               Отправить мастеру
             </a>
           )}

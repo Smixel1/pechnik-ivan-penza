@@ -9,6 +9,7 @@ export type GalleryItem = {
 export function PortfolioGallery({ items }: { items: GalleryItem[] }) {
   const [active, setActive] = useState<GalleryItem | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const openingButtonRef = useRef<HTMLButtonElement>(null);
 
   const close = useCallback(() => setActive(null), []);
 
@@ -21,12 +22,17 @@ export function PortfolioGallery({ items }: { items: GalleryItem[] }) {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
+      if (event.key === "Tab") {
+        event.preventDefault();
+        closeRef.current?.focus();
+      }
     };
 
     document.addEventListener("keydown", onKeyDown);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = prevOverflow;
+      openingButtonRef.current?.focus();
     };
   }, [active, close]);
 
@@ -37,7 +43,10 @@ export function PortfolioGallery({ items }: { items: GalleryItem[] }) {
           <figure key={item.src} className={i % 3 === 0 ? "sm:col-span-2" : undefined}>
             <button
               type="button"
-              onClick={() => setActive(item)}
+              onClick={(event) => {
+                openingButtonRef.current = event.currentTarget;
+                setActive(item);
+              }}
               className={`gallery-thumb group relative w-full ${
                 i % 3 === 0 ? "aspect-[16/9]" : "aspect-[4/3]"
               }`}

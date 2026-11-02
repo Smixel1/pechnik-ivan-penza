@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-# Set VITE_SITE_URL and rebuild to emit an absolute Sitemap URL.
+Sitemap: https://pechnik-ivan-penza.vercel.app/sitemap.xml

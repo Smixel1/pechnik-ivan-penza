@@ -10,7 +10,9 @@ export function withSecurityHeaders(response: Response, request: Request): Respo
   headers.set("Cross-Origin-Resource-Policy", "same-site");
 
   if (import.meta.env.PROD) {
-    headers.set("Content-Security-Policy", buildContentSecurityPolicy());
+    if (!headers.has("Content-Security-Policy")) {
+      headers.set("Content-Security-Policy", buildContentSecurityPolicy());
+    }
 
     try {
       const url = new URL(request.url);
@@ -29,7 +31,7 @@ export function withSecurityHeaders(response: Response, request: Request): Respo
   });
 }
 
-function buildContentSecurityPolicy(): string {
+export function buildContentSecurityPolicy(nonce?: string): string {
   const directives = [
     "default-src 'self'",
     "base-uri 'self'",
@@ -39,7 +41,8 @@ function buildContentSecurityPolicy(): string {
     "img-src 'self' data:",
     "font-src 'self' https://fonts.gstatic.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "script-src 'self' 'unsafe-inline'",
+    `script-src 'self'${nonce ? ` 'nonce-${nonce}'` : ""}`,
+    "script-src-attr 'none'",
     "connect-src 'self'",
   ];
 

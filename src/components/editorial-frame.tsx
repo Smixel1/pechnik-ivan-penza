@@ -27,7 +27,9 @@ export function EditorialFrame({
           {marker}
         </span>
       ) : null}
-      <div className={`editorial-inner mx-auto max-w-content px-5 sm:px-8 ${innerClassName}`.trim()}>
+      <div
+        className={`editorial-inner mx-auto max-w-content px-5 sm:px-8 ${innerClassName}`.trim()}
+      >
         {children}
       </div>
     </section>
