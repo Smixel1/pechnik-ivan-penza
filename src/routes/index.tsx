@@ -4,17 +4,9 @@ import type { ReactNode } from "react";
 import { EditorialFrame } from "@/components/editorial-frame";
 import { EstimateCalculator } from "@/components/estimate-calculator";
 import { PortfolioGallery } from "@/components/portfolio-gallery";
-import {
-  SITE_NAME,
-  TG_HANDLE,
-  TG_URL,
-} from "@/lib/site";
+import { SITE_NAME, TG_HANDLE, TG_URL } from "@/lib/site";
 import { buildHomeJsonLd, buildPageHead } from "@/lib/seo";
-import {
-  consultationMessage,
-  projectDiscussionMessage,
-  telegramShareUrl,
-} from "@/lib/telegram";
+import { consultationMessage, projectDiscussionMessage, telegramShareUrl } from "@/lib/telegram";
 
 const IMG = {
   fireHero: "/images/kirpichnaya-pech-zhivoy-ogon.png",
@@ -78,11 +70,11 @@ export const Route = createFileRoute("/")({
 
 const NAV = [
   { href: "#about", label: "Обо мне" },
+  { href: "#works", label: "Работы" },
   { href: "#brick", label: "Почему кирпич" },
   { href: "#tech", label: "Технология" },
-  { href: "#works", label: "Работы" },
-  { href: "#process", label: "Как работаю" },
   { href: "#estimate", label: "Расчёт" },
+  { href: "#process", label: "Как работаю" },
   { href: "#contact", label: "Контакты" },
 ];
 
@@ -91,8 +83,14 @@ const ABOUT_HIGHLIGHTS = [
     title: "20+ лет",
     text: "Работаю с печами и комплексами — от простых отопительных до больших уличных.",
   },
-  { title: "Пенза и область", text: "Выезжаю по Пензе и Пензенской области. Обсудить задачу удобнее всего в Telegram." },
-  { title: "Личная кладка", text: "Кладу сам — от топливника до последнего ряда, без передачи на субподряд." },
+  {
+    title: "Пенза и область",
+    text: "Выезжаю по Пензе и Пензенской области. Обсудить задачу удобнее всего в Telegram.",
+  },
+  {
+    title: "Личная кладка",
+    text: "Кладу сам — от топливника до последнего ряда, без передачи на субподряд.",
+  },
 ];
 
 const CLIENT_INFO = [
@@ -123,14 +121,35 @@ const CLIENT_INFO = [
 ];
 
 const COST_FACTORS = [
-  ["Тип печи или комплекса", "Отопительная печь, камин, банная, уличный комплекс — у каждого решения свой объём работ."],
-  ["Размеры и массив кладки", "Чем больше конструкция и сложнее геометрия каналов, тем больше времени и материала."],
-  ["Материалы", "Кирпич, шамот, растворы, дверцы и печное литьё — подбираются под конкретную задачу."],
-  ["Сложность проекта", "Ниши, арки, несколько топок, казан, мангал — каждый элемент влияет на конструкцию."],
-  ["Фундамент и основание", "Печь должна стоять на подготовленном основании, рассчитанном под её массу."],
+  [
+    "Тип печи или комплекса",
+    "Отопительная печь, камин, банная, уличный комплекс — у каждого решения свой объём работ.",
+  ],
+  [
+    "Размеры и массив кладки",
+    "Чем больше конструкция и сложнее геометрия каналов, тем больше времени и материала.",
+  ],
+  [
+    "Материалы",
+    "Кирпич, шамот, растворы, дверцы и печное литьё — подбираются под конкретную задачу.",
+  ],
+  [
+    "Сложность проекта",
+    "Ниши, арки, несколько топок, казан, мангал — каждый элемент влияет на конструкцию.",
+  ],
+  [
+    "Фундамент и основание",
+    "Печь должна стоять на подготовленном основании, рассчитанном под её массу.",
+  ],
   ["Отделка и облицовка", "Внешний вид и тип облицовки влияют на объём отделочных работ."],
-  ["Дополнительные элементы", "Дровник, столешница, навес, дымоход — всё это учитывается отдельно."],
-  ["Особенности помещения", "Планировка, доступ, дымоход и режим эксплуатации определяют схему печи."],
+  [
+    "Дополнительные элементы",
+    "Дровник, столешница, навес, дымоход — всё это учитывается отдельно.",
+  ],
+  [
+    "Особенности помещения",
+    "Планировка, доступ, дымоход и режим эксплуатации определяют схему печи.",
+  ],
   ["Монтаж и выезд", "Условия на объекте и логистика также входят в общую картину проекта."],
 ];
 
@@ -289,6 +308,7 @@ function Index() {
                   <a
                     key={n.href}
                     href={n.href}
+                    aria-label={n.label}
                     onClick={closeMobileNav}
                     className="nav-link block min-h-11 px-5 py-3 text-muted-foreground transition-colors hover:text-foreground"
                   >
@@ -317,13 +337,13 @@ function Index() {
             <div className="hero-zoom absolute inset-0">
               <img
                 src={IMG.fireHero}
-              alt="Живой огонь в топке кирпичной печи"
-              width={1376}
-              height={800}
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-              sizes="100vw"
+                alt="Живой огонь в топке кирпичной печи"
+                width={1376}
+                height={800}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                sizes="100vw"
                 className="hero-zoom-img h-full w-full object-cover opacity-90"
               />
             </div>
@@ -340,11 +360,14 @@ function Index() {
               className="fire-flicker absolute left-1/2 bottom-[18%] h-64 w-64 -translate-x-1/2 rounded-full blur-3xl"
               style={{ background: "oklch(0.653 0.145 47 / 0.55)" }}
             />
-            <div aria-hidden className="hero-text-scrim absolute inset-x-0 bottom-0 h-[62%] sm:h-[58%]" />
+            <div
+              aria-hidden
+              className="hero-text-scrim absolute inset-x-0 bottom-0 h-[62%] sm:h-[58%]"
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/35 to-background" />
           </div>
 
-          <div className="editorial-inner mx-auto flex min-h-[86svh] max-w-content flex-col justify-end pb-20 pt-28 sm:pb-28">
+          <div className="editorial-inner mx-auto flex min-h-[86svh] max-w-content flex-col justify-end px-5 pb-20 pt-28 sm:px-8 sm:pb-28">
             <div className="rise-in max-w-3xl">
               <h1 className="display text-[clamp(2.05rem,8vw,4.5rem)] leading-[1.05]">
                 Я кладу кирпичные печи,
@@ -369,19 +392,19 @@ function Index() {
         <EditorialFrame id="about" marker="01" innerClassName="py-24 sm:py-32">
           <div className="read-width-wide">
             <SectionLabel>01 — Мастер</SectionLabel>
-              <h2 className="display text-3xl sm:text-4xl">Обо мне</h2>
-              <div className="mt-8 space-y-5 prose-copy text-muted-foreground">
-                <p>
-                  Меня зовут Иван. Печами я занимаюсь больше двадцати лет: сначала помогал, потом
-                  стал класть сам. За это время через руки прошли и простые отопительные печи, и
-                  большие уличные комплексы.
-                </p>
-                <p>
-                  Работаю по Пензе и области, чаще всего один — так я отвечаю за каждый ряд кладки
-                  лично. Для меня печь начинается не с облицовки, а с того, как внутри проходит
-                  горячий газ и как массив будет держать тепло.
-                </p>
-              </div>
+            <h2 className="display text-3xl sm:text-4xl">Обо мне</h2>
+            <div className="mt-8 space-y-5 prose-copy text-muted-foreground">
+              <p>
+                Меня зовут Иван. Печами я занимаюсь больше двадцати лет: сначала помогал, потом стал
+                класть сам. За это время через руки прошли и простые отопительные печи, и большие
+                уличные комплексы.
+              </p>
+              <p>
+                Работаю по Пензе и области, чаще всего один — так я отвечаю за каждый ряд кладки
+                лично. Для меня печь начинается не с облицовки, а с того, как внутри проходит
+                горячий газ и как массив будет держать тепло.
+              </p>
+            </div>
             <blockquote className="read-width mt-10 border-l border-amber/60 pl-6 prose-copy text-foreground/90">
               Красивый фасад сделать несложно. Гораздо важнее, чтобы печь ровно грела, нормально
               тянула и спокойно переживала сотни циклов нагрева и остывания.
@@ -431,10 +454,31 @@ function Index() {
           </div>
         </section>
 
+        {/* GALLERY */}
+        <EditorialFrame
+          id="works"
+          marker="02"
+          className="border-t border-border/60"
+          innerClassName="py-24 sm:py-32"
+        >
+          <SectionLabel>02 — Портфолио</SectionLabel>
+          <h2 className="display max-w-2xl text-3xl sm:text-4xl">Мои работы</h2>
+          <p className="mt-6 read-width prose-copy text-muted-foreground">
+            Печи, камины и комплексы из кирпича — отопительные, уличные и для готовки.
+          </p>
+          <PortfolioGallery items={GALLERY} />
+
+          <SectionCta
+            text="Понравился такой вариант? Можно обсудить похожий проект под ваше помещение и задачу."
+            label="Обсудить свой проект"
+            href={telegramShareUrl(projectDiscussionMessage())}
+          />
+        </EditorialFrame>
+
         {/* WHY BRICK */}
         <section id="brick" className="editorial-section border-y border-border/60 bg-card">
           <div className="editorial-inner mx-auto max-w-content px-5 py-24 sm:px-8 sm:py-32">
-            <SectionLabel>02 — Материал</SectionLabel>
+            <SectionLabel>03 — Материал</SectionLabel>
             <h2 className="display max-w-2xl text-3xl sm:text-4xl">Почему я выбираю кирпич</h2>
             <div className="mt-14 grid gap-x-16 gap-y-12 md:grid-cols-2">
               {[
@@ -478,8 +522,8 @@ function Index() {
         </section>
 
         {/* TECH */}
-        <EditorialFrame id="tech" marker="03" innerClassName="py-24 sm:py-32">
-          <SectionLabel>03 — Технология</SectionLabel>
+        <EditorialFrame id="tech" marker="04" innerClassName="py-24 sm:py-32">
+          <SectionLabel>04 — Технология</SectionLabel>
           <h2 className="display max-w-2xl text-3xl sm:text-4xl">
             Из чего складывается хорошая печь
           </h2>
@@ -569,7 +613,7 @@ function Index() {
         {/* WORKS TYPES */}
         <section className="editorial-section border-y border-border/60 bg-card">
           <div className="editorial-inner mx-auto max-w-content px-5 py-24 sm:px-8 sm:py-32">
-            <SectionLabel>04 — Что я кладу</SectionLabel>
+            <SectionLabel>05 — Что я кладу</SectionLabel>
             <h2 className="display max-w-2xl text-3xl sm:text-4xl">Виды работ</h2>
             <div className="mt-14 divide-y divide-border/70 border-y border-border/70">
               {WORKS.map((w) => (
@@ -586,12 +630,12 @@ function Index() {
         </section>
 
         {/* COST */}
-        <EditorialFrame id="cost" marker="04" innerClassName="py-24 sm:py-32">
-          <SectionLabel>Из чего складывается цена</SectionLabel>
+        <EditorialFrame id="cost" marker="06" innerClassName="py-24 sm:py-32">
+          <SectionLabel>06 — Из чего складывается цена</SectionLabel>
           <h2 className="display max-w-2xl text-3xl sm:text-4xl">Из чего складывается стоимость</h2>
           <p className="mt-6 read-width-wide prose-copy text-muted-foreground">
-            У каждого проекта свои параметры. Точную стоимость можно назвать только после
-            обсуждения — ниже перечислены основные факторы, которые на неё влияют.
+            У каждого проекта свои параметры. Точную стоимость можно назвать только после обсуждения
+            — ниже перечислены основные факторы, которые на неё влияют.
           </p>
           <div className="mt-14 grid gap-px border border-border/70 bg-border/70 sm:grid-cols-2 lg:grid-cols-3">
             {COST_FACTORS.map(([title, desc]) => (
@@ -605,10 +649,7 @@ function Index() {
             <TelegramLink href={telegramShareUrl(consultationMessage())}>
               Получить предварительный расчёт
             </TelegramLink>
-            <a
-              href="#estimate"
-              className="cta-secondary"
-            >
+            <a href="#estimate" className="cta-secondary">
               Заполнить данные для оценки →
             </a>
           </div>
@@ -617,12 +658,12 @@ function Index() {
         {/* ESTIMATE */}
         <EditorialFrame
           id="estimate"
-          marker="05"
+          marker="07"
           className="border-y border-border/60 bg-card"
           innerClassName="py-24 sm:py-32"
         >
           <div className="mx-auto max-w-3xl">
-            <SectionLabel>Предварительная оценка</SectionLabel>
+            <SectionLabel>07 — Предварительная оценка</SectionLabel>
             <h2 className="display text-3xl sm:text-4xl">Подготовить данные для расчёта</h2>
             <p className="mt-6 read-width prose-copy text-muted-foreground">
               Ответьте на несколько вопросов — и сформируйте сообщение для мастера. Это не
@@ -637,52 +678,36 @@ function Index() {
         {/* PROCESS */}
         <section id="process" className="editorial-section">
           <div className="editorial-inner mx-auto max-w-content px-5 py-24 sm:px-8 sm:py-32">
-          <SectionLabel>05 — Порядок работы</SectionLabel>
-          <h2 className="display max-w-2xl text-3xl sm:text-4xl">Как я работаю</h2>
-          <ol className="mt-14 grid gap-px overflow-hidden border border-border/70 bg-border/70 sm:grid-cols-2 lg:grid-cols-3">
-            {STEPS.map((s, i) => (
-              <li key={s.t} className="bg-background p-6 sm:p-8">
-                <span className="display text-2xl text-amber">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="display mt-4 text-lg text-foreground">{s.t}</h3>
-                <p className="mt-2 prose-copy-sm text-muted-foreground">{s.d}</p>
-              </li>
-            ))}
-          </ol>
+            <SectionLabel>08 — Порядок работы</SectionLabel>
+            <h2 className="display max-w-2xl text-3xl sm:text-4xl">Как я работаю</h2>
+            <ol className="mt-14 grid gap-px overflow-hidden border border-border/70 bg-border/70 sm:grid-cols-2 lg:grid-cols-3">
+              {STEPS.map((s, i) => (
+                <li key={s.t} className="bg-background p-6 sm:p-8">
+                  <span className="display text-2xl text-amber">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="display mt-4 text-lg text-foreground">{s.t}</h3>
+                  <p className="mt-2 prose-copy-sm text-muted-foreground">{s.d}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
-
-        {/* GALLERY */}
-        <EditorialFrame id="works" marker="02" className="border-t border-border/60" innerClassName="py-24 sm:py-32">
-            <SectionLabel>06 — Портфолио</SectionLabel>
-            <h2 className="display max-w-2xl text-3xl sm:text-4xl">Мои работы</h2>
-            <p className="mt-6 read-width prose-copy text-muted-foreground">
-              Печи, камины и комплексы из кирпича — отопительные, уличные и для готовки.
-            </p>
-            <PortfolioGallery items={GALLERY} />
-
-            <SectionCta
-              text="Понравился такой вариант? Можно обсудить похожий проект под ваше помещение и задачу."
-              label="Обсудить свой проект"
-              href={telegramShareUrl(projectDiscussionMessage())}
-            />
-          </EditorialFrame>
 
         {/* FAQ */}
         <section id="faq" className="editorial-section border-y border-border/60 bg-card">
           <div className="editorial-inner mx-auto max-w-content px-5 py-24 sm:px-8 sm:py-32">
             <div className="mx-auto max-w-3xl">
-            <SectionLabel>07 — Вопросы</SectionLabel>
-            <h2 className="display text-3xl sm:text-4xl">Частые вопросы</h2>
-            <div className="mt-12 divide-y divide-border/70 border-y border-border/70">
-              {FAQ.map((f) => (
-                <article key={f.q} className="py-7">
-                  <h3 className="display text-lg text-foreground">{f.q}</h3>
-                  <p className="mt-3 read-width prose-copy text-muted-foreground">{f.a}</p>
-                </article>
-              ))}
-            </div>
+              <SectionLabel>09 — Вопросы</SectionLabel>
+              <h2 className="display text-3xl sm:text-4xl">Частые вопросы</h2>
+              <div className="mt-12 divide-y divide-border/70 border-y border-border/70">
+                {FAQ.map((f) => (
+                  <article key={f.q} className="py-7">
+                    <h3 className="display text-lg text-foreground">{f.q}</h3>
+                    <p className="mt-3 read-width prose-copy text-muted-foreground">{f.a}</p>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -690,18 +715,18 @@ function Index() {
         {/* PRE-CONTACT CTA */}
         <section className="editorial-section">
           <div className="editorial-inner mx-auto max-w-content px-5 py-16 sm:px-8 sm:py-20">
-          <SectionCta
-            text="Есть идея или только общее понимание задачи? Расскажите, что хотите построить — разберёмся, с чего начать."
-            label="Расскажите, что хотите построить"
-            href={telegramShareUrl(projectDiscussionMessage())}
-          />
+            <SectionCta
+              text="Есть идея или только общее понимание задачи? Расскажите, что хотите построить — разберёмся, с чего начать."
+              label="Расскажите, что хотите построить"
+              href={telegramShareUrl(projectDiscussionMessage())}
+            />
           </div>
         </section>
 
         {/* CONTACT */}
         <section id="contact" className="editorial-section relative isolate overflow-hidden">
           <span aria-hidden className="editorial-marker editorial-marker-subtle">
-            06
+            10
           </span>
           <img
             src={IMG.fireHero}
@@ -716,27 +741,29 @@ function Index() {
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-background/85 to-background" />
           <div className="editorial-inner mx-auto max-w-content px-5 py-28 sm:px-8 sm:py-36">
             <div className="mx-auto max-w-3xl text-center">
-            <h2 className="display text-3xl sm:text-5xl">Есть место под печь? Давайте обсудим.</h2>
-            <p className="mx-auto mt-7 read-width prose-copy text-muted-foreground">
-              Расскажите, что за помещение и что вы хотите от печи. Отвечу, что здесь реально
-              сделать. Работаю по Пензе и Пензенской области.
-            </p>
-            <div className="mt-11 flex flex-col items-center gap-5">
-              <TelegramLink href={telegramShareUrl(projectDiscussionMessage())}>
-                Обсудить проект
-              </TelegramLink>
-              <TelegramLink variant="outline" href={telegramShareUrl(consultationMessage())}>
-                Получить консультацию
-              </TelegramLink>
-              <a
-                href={TG_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center text-sm tracking-widest text-muted-foreground transition-colors hover:text-firelight"
-              >
-                {TG_HANDLE}
-              </a>
-            </div>
+              <h2 className="display text-3xl sm:text-5xl">
+                Есть место под печь? Давайте обсудим.
+              </h2>
+              <p className="mx-auto mt-7 read-width prose-copy text-muted-foreground">
+                Расскажите, что за помещение и что вы хотите от печи. Отвечу, что здесь реально
+                сделать. Работаю по Пензе и Пензенской области.
+              </p>
+              <div className="mt-11 flex flex-col items-center gap-5">
+                <TelegramLink href={telegramShareUrl(projectDiscussionMessage())}>
+                  Обсудить проект
+                </TelegramLink>
+                <TelegramLink variant="outline" href={telegramShareUrl(consultationMessage())}>
+                  Получить консультацию
+                </TelegramLink>
+                <a
+                  href={TG_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center text-sm tracking-widest text-muted-foreground transition-colors hover:text-firelight"
+                >
+                  {TG_HANDLE}
+                </a>
+              </div>
             </div>
           </div>
         </section>

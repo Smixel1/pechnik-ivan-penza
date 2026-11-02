@@ -10,12 +10,12 @@ const TELEGRAM_FIELD_LIMITS = {
   notes: 500,
 } as const;
 
+// eslint-disable-next-line no-control-regex -- Control characters are the input being removed.
+const CONTROL_CHARACTERS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
+
 /** Strip control characters and cap length for user-supplied Telegram message fields. */
 export function sanitizeTelegramField(value: string, maxLength: number): string {
-  return value
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
-    .trim()
-    .slice(0, maxLength);
+  return value.replace(CONTROL_CHARACTERS, "").trim().slice(0, maxLength);
 }
 
 export function telegramFieldLimit(field: keyof typeof TELEGRAM_FIELD_LIMITS): number {
