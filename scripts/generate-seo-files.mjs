@@ -1,10 +1,13 @@
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { loadEnv } from "vite";
+import { parseEnv } from "node:util";
 
+const productionEnv = existsSync(".env.production")
+  ? parseEnv(readFileSync(".env.production", "utf8"))
+  : {};
 const origin = (
-  process.env.VITE_SITE_URL ??
-  loadEnv("production", process.cwd(), "VITE_").VITE_SITE_URL ??
+  process.env.VITE_SITE_URL?.trim() ||
+  productionEnv.VITE_SITE_URL?.trim() ||
   ""
 ).replace(/\/$/, "");
 
